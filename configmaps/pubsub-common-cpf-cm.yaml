@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pubsub-common-cpf-cm
+  namespace: dex-werkplekken-o
+data:
+  merge.cpf: |
+    [config]
+    globals=0,0,512,0,0,0
+    routines=128
+
+    [Startup]
+    SystemMode=DEVELOPMENT
