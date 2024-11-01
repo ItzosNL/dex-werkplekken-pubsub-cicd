@@ -22,7 +22,7 @@ spec:
     data:
       image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/iris:2024.2
       compatibilityVersion: '2024.2'
-      mirroered: true
+      mirrored: true
       podTemplate:
         spec:
           nodeSelector:
