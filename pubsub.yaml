@@ -8,8 +8,8 @@ spec:
   configSource:
     name: pubsub-common-cpf-cm
   imagePullSecrets:
-  - name: harbor-pull-credentials
-  - name: harbor-intersystems-credentials
+    - name: harbor-pull-credentials
+    - name: harbor-intersystems-credentials
   topology:
     data:
       image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/iris:2024.2
@@ -18,7 +18,7 @@ spec:
       podTemplate:
         spec:
           nodeSelector:
-            px/enabled: "true"
+            px/enabled: 'true'
           resources:
             requests:
               cpu: 100m
@@ -27,16 +27,16 @@ spec:
               cpu: 500m
               memory: 1Gi
       irisDatabases:
-      - name: PUBSUB_DATA
-        directory: /irissys/data/IRIS/mgr/PUBSUB_DATA
-        ecp: true
-        mirrored: true
-      - name: PUBSUB_CODE
-        directory: /irissys/data/IRIS/mgr/PUBSUB_CODE
+        - name: PUBSUB_DATA
+          directory: /irissys/data/IRIS/mgr/PUBSUB_DATA
+          ecp: true
+          mirrored: true
+        - name: PUBSUB_CODE
+          directory: /irissys/data/IRIS/mgr/PUBSUB_CODE
       irisNamespaces:
-      - name: PUBSUB
-        routines: PUBSUB_CODE
-        globals: PUBSUB_DATA
+        - name: PUBSUB
+          routines: PUBSUB_CODE
+          globals: PUBSUB_DATA
       webgateway:
         image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/webgateway:2024.2
         replicas: 1
@@ -66,10 +66,10 @@ spec:
                 cpu: 100m
                 memory: 512Mi
             nodeSelector:
-              px/enabled: "true"
+              px/enabled: 'true'
     compute:
       image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/irishealth:2024.2
-      compatibilityVersion: "2024.2"
+      compatibilityVersion: '2024.2'
       hpa:
         spec:
           minReplicas: 2
@@ -85,7 +85,7 @@ spec:
           # args:
           #   - '--after iris session IRIS < /home/irisowner/after-install.script'
           nodeSelector:
-            px/enabled: "true"
+            px/enabled: 'true'
           resources:
             requests:
               cpu: 100m
@@ -131,6 +131,6 @@ spec:
               cpu: 200m
               memory: 1Gi
           nodeSelector:
-            px/enabled: "true"
+            px/enabled: 'true'
     arbiter:
       image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/arbiter:2024.2
