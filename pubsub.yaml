@@ -10,6 +10,14 @@ spec:
   imagePullSecrets:
     - name: harbor-pull-credentials
     - name: harbor-intersystems-credentials
+  volumes:
+    # configmaps
+    - name: pubsub-after-install-cm
+      configMap:
+        name: pubsub-after-install-cm
+    - name: pubsub-defaultsettings-cm
+      configMap:
+        name: pubsub-defaultsettings-cm
   topology:
     data:
       image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/iris:2024.2
@@ -68,7 +76,8 @@ spec:
             nodeSelector:
               px/enabled: 'true'
     compute:
-      image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/irishealth:2024.2
+      # image: harbor.hex.kpnappfactory.nl/intersystems/intersystems/irishealth:2024.2
+      image: harbor.443916233c2349241f52.kpnappfactory.nl/hex/hex-werkplekken-pubsub:1.0.0-001    
       compatibilityVersion: '2024.2'
       hpa:
         spec:
@@ -82,8 +91,8 @@ spec:
         type: RollingUpdate
       podTemplate:
         spec:
-          # args:
-          #   - '--after iris session IRIS < /home/irisowner/after-install.script'
+          args:
+            - '--after iris session IRIS < /home/irisowner/after-install.script'
           nodeSelector:
             px/enabled: 'true'
           resources:
@@ -93,13 +102,13 @@ spec:
             limits:
               cpu: 500m
               memory: 2Gi
-      # volumeMounts:
-      # - name: mkls-configmaps-cm
-      #   mountPath: /home/irisowner/configmaps
+      volumeMounts:
+      - name: pubsub-after-install-cm
+        mountPath: /home/irisowner/configmaps
       # - name: mkls-after-install
       #   mountPath: /home/irisowner/after-installs
-      # - name: mkls-defaultsettings
-      #   mountPath: /home/irisowner/sysdefaults
+      - name: pubsub-defaultsettings-cm
+        mountPath: /home/irisowner/sysdefaults
       # - name: certificates-volume
       #   mountPath: /home/irisowner/certificates
     webgateway:

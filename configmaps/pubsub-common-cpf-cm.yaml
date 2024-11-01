@@ -8,6 +8,3 @@ data:
     [config]
     globals=0,0,512,0,0,0
     routines=128
-
-    [Startup]
-    SystemMode=DEVELOPMENT

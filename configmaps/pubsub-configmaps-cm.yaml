@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pubsub-configmaps-cm
+  namespace: dex-werkplekken-o
+data:
+  after-install.json: |
+    {
+      "namespace": "PUBSUB",
+      "certificatespath": "/home/irisowner/certificates",
+      "systemdefaultspath": "/home/irisowner/sysdefaults",
+      "system-mode": "ITZOS-PUBSUB-DEVELOPMENT",
+      "beheerapi": true,
+
+
+      "monitoring": {
+        "enabled": true,
+        "stage": "dev",
+        "description": "Publish and Subscribe - core",
+        "customer": "Intern",
+        "logstash-url": "https://monitor.itzosservices.nl/logstash",
+        "logstash-ssl-config":  "Default",
+        "logstash-check-server-identity":  false,
+        "logstash-proxy-address": ""
+      },
+      "roles": [
+      ],
+      "webapplications": [
+        {
+          "url": "/pubsub/portal",
+          "dispatchClass": "PubSub.Core.API.v1.disp",
+          "role": "%All"
+        }
+      ],
+      "cspapplications": [
+        {
+          "url": "/pubsub/portal",
+          "directory": "/tmp/csp/pubsub/portal",
+          "resource": "",
+          "authenticationMethods": 64,
+          "grant": "%All",
+          "description": "",
+          "cookiePath": "/pub/portal/",
+          "recurse": true,
+          "autoCompile": true
+        }
+    ],
+      "sslconfigs": {
+      },
+      "credentials": [
+      ],
+      "sqlconfigs": [
+      ],
+      "users": [
+        {
+            "name": "tstolker",
+            "password": "defaultuser",
+            "roles": "%ALL",
+            "changePassword": true
+        },
+        {
+            "name": "jplatenburg",
+            "password": "defaultuser",
+            "roles": "%ALL",
+            "changePassword": true
+        }
+      ],
+      "auditEvents": {
+        "%System/%Login/Login": true,
+        "%System/%Login/LoginFailure": true,
+        "%System/%Login/Logout": true,
+        "%System/%Login/LoginFailure": true,
+        "%System/%Login/TaskEnd": true,
+        "%System/%Login/TaskStart": true,
+        "%System/%Login/Terminate": true,
+        "%System/%Login/JobStart": true
+      },
+      "serviceregistries": [
+      ],
+      "backup-config": {
+        "databases" : ["PUBSUB_DATA"],
+        "fullBackup": {
+          "name": "Itzos Weekly",
+          "folder": "/irissys/backups",
+          "type": "full",
+          "schema": {
+              "type": "On Demand",
+              "day": "tu",
+              "time": "06:00:00"
+          }
+        }, 
+        "cumulativeBackup": {
+          "name": "Itzos Daily",
+          "folder": "/irissys/backups",
+          "type": "Cumulative",
+          "schema": {
+              "type": "On Demand",
+              "day": "mo,we,th,fr",
+              "time": "06:00:00"
+          }
+        }
+      },
+      "tasks": [
+      ],
+      "lookupTables": {
+      },
+      "remotedb": {
+        "databasename": "REMOTE_DATABASE",
+        "remoteserver": "IRIS-0",
+        "directory": "/irissys/data/IRIS/mgr/PUBSUB_DATA/",
+        "globalmapping": [
+          {
+            "namespace": "PUBSUB",
+            "globalnames": [
+              "%SYS.Log*",
+              "PubSub.Core.Data.*"
+              ]
+          }
+        ]
+      }
+      # "production": "PUBSUB.FoundationProduction"
+    }

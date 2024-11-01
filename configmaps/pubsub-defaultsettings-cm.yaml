@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pubsub-defaultsettings-cm
+  namespace: dex-werkplekken-o
+data:
+  Ens.Config.DefaultSettings.esd: |
+    <?xml version="1.0"?>
+    <defaultSettings>
+    </defaultSettings>
