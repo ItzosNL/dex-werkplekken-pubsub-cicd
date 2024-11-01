@@ -12,9 +12,9 @@ spec:
     - name: harbor-intersystems-credentials
   volumes:
     # configmaps
-    - name: pubsub-after-install-cm
+    - name: pubsub-configmaps-cm
       configMap:
-        name: pubsub-after-install-cm
+        name: pubsub-configmaps-cm
     - name: pubsub-defaultsettings-cm
       configMap:
         name: pubsub-defaultsettings-cm
@@ -103,7 +103,7 @@ spec:
               cpu: 500m
               memory: 2Gi
       volumeMounts:
-      - name: pubsub-after-install-cm
+      - name: pubsub-configmaps-cm
         mountPath: /home/irisowner/configmaps
       # - name: mkls-after-install
       #   mountPath: /home/irisowner/after-installs
